@@ -7,19 +7,6 @@ const index = () => {
     <Contact/>
     </>
 
-
-
-
-
-
-
-
-
-
-
-
-
-ksfhgk
   )
 }
 
