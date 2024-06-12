@@ -105,7 +105,7 @@ export default () => {
                                 src="https://raybiztech.com/RBT/media/RBT-Images/machine_learning-logo.png"
                                 width={120}
                                 height={50}
-                                alt="Float UI logo"
+                                alt="Logo.png"
                             />
                         </a>
                         <div className="md:hidden">
