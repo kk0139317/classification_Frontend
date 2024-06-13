@@ -1,4 +1,47 @@
-export default () => {
+
+'use client';
+import { useState } from 'react';
+import axios from 'axios';
+
+
+export default function LoginPage()  {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         const response = await axios.post('http://127.0.0.1:8000/api/token/', {
+    //             email,
+    //             password,
+    //         });
+    //         const { access, refresh } = response.data;
+    //         // Store tokens in localStorage or cookies
+    //         localStorage.setItem('access_token', access);
+    //         localStorage.setItem('refresh_token', refresh);
+    //         // Redirect or update UI
+    //     } catch (err) {
+    //         setError('Invalid credentials');
+    //     }
+    // };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+      
+        try {
+          const response = await axios.post('http://127.0.0.1:8000/api/login/', {
+            email,
+            password,
+          });
+      
+          // Handle successful login
+          console.log('Login successful!', response.data);
+          // Store tokens in localStorage (implementation omitted)
+          // Redirect to a different page (implementation omitted)
+        } catch (error) {
+          setError(error.response.data.message || 'Login failed');
+        }
+      };
+
     return (
         <main className="w-full h-screen flex flex-col items-center justify-center bg-gray-50 sm:px-4">
             <div className="w-full space-y-6 text-gray-600 sm:max-w-md">
@@ -55,31 +98,30 @@ export default () => {
                         <span className="block w-full h-px bg-gray-300"></span>
                         <p className="inline-block w-fit text-sm bg-white px-2 absolute -top-2 inset-x-0 mx-auto">Or continue with</p>
                     </div>
-                    <form
-                        onSubmit={(e) => e.preventDefault()}
-                        className="space-y-5"
-                    >
+                    <form onSubmit={handleSubmit} className="space-y-5">
                         <div>
-                            <label className="font-medium">
-                                Email
-                            </label>
+                            <label className="font-medium">Email</label>
                             <input
                                 type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
                                 className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                             />
                         </div>
                         <div>
-                            <label className="font-medium">
-                                Password
-                            </label>
+                            <label className="font-medium">Password</label>
                             <input
                                 type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 required
                                 className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                             />
                         </div>
+                        {error && <p className="text-red-500">{error}</p>}
                         <button
+                            type="submit"
                             className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
                         >
                             Sign in
